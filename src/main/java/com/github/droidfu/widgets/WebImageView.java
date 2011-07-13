@@ -51,6 +51,10 @@ public class WebImageView extends ViewSwitcher {
 
     private Drawable progressDrawable, errorDrawable;
 
+    private int maxWidth=-1;
+    private int maxHeight=-1;
+    private boolean adjustViewBounds=false;
+
     /**
      * @param context
      *            the view's current context
@@ -172,7 +176,6 @@ public class WebImageView extends ViewSwitcher {
 
     private void addImageView(Context context) {
         imageView = new ImageView(context);
-        imageView.setScaleType(scaleType);
         LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER;
         addView(imageView, 1, lp);
@@ -226,6 +229,14 @@ public class WebImageView extends ViewSwitcher {
         protected boolean handleImageLoaded(Bitmap bitmap, Message msg) {
             boolean wasUpdated = super.handleImageLoaded(bitmap, msg);
             if (wasUpdated) {
+                imageView.setAdjustViewBounds(adjustViewBounds);
+                if (maxHeight>0) {
+                    imageView.setMaxHeight(maxHeight);
+                }
+                if (maxWidth>0) {
+                    imageView.setMaxWidth(maxWidth);
+                }
+
                 isLoaded = true;
                 setDisplayedChild(1);
             }
@@ -240,4 +251,17 @@ public class WebImageView extends ViewSwitcher {
 	public String getImageUrl() {
 		return imageUrl;
 	}
+
+    public void setMaxWidth(int maxWidth) {
+        this.maxWidth = maxWidth;
+    }
+
+    public void setMaxHeight(int maxHeight) {
+        this.maxHeight = maxHeight;
+    }
+
+    public void setAdjustViewBounds(boolean adjustViewBounds) {
+        this.adjustViewBounds = adjustViewBounds;
+    }
+
 }
