@@ -52,7 +52,7 @@ public class ImageLoader implements Runnable {
 
     private static final String LOG_TAG = "Droid-Fu/ImageLoader";
     // the default thread pool size
-    private static final int DEFAULT_POOL_SIZE = 3;
+    private static final int DEFAULT_POOL_SIZE = 9;
     // expire images after a day
     // TODO: this currently only affects the in-memory cache, so it's quite pointless
     private static final int DEFAULT_TTL_MINUTES = 24 * 60;
