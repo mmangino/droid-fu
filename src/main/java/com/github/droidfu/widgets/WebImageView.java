@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ViewSwitcher;
 import android.widget.ImageView.ScaleType;
+import android.util.Log;
 
 import com.github.droidfu.DroidFu;
 import com.github.droidfu.imageloader.ImageLoader;

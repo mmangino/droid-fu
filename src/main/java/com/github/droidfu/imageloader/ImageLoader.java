@@ -56,7 +56,7 @@ public class ImageLoader implements Runnable {
     // expire images after a day
     // TODO: this currently only affects the in-memory cache, so it's quite pointless
     private static final int DEFAULT_TTL_MINUTES = 24 * 60;
-    private static final int DEFAULT_RETRY_HANDLER_SLEEP_TIME = 1000;
+    private static final int DEFAULT_RETRY_HANDLER_SLEEP_TIME = 1500;
     private static final int DEFAULT_NUM_RETRIES = 3;
 
     private static ThreadPoolExecutor executor;
@@ -97,7 +97,7 @@ public class ImageLoader implements Runnable {
         }
         if (imageCache == null) {
             imageCache = new ImageCache(25, expirationInMinutes, DEFAULT_POOL_SIZE);
-            imageCache.enableDiskCache(context, ImageCache.DISK_CACHE_SDCARD);
+            imageCache.enableDiskCache(context, ImageCache.DISK_CACHE_INTERNAL);
         }
     }
 
@@ -210,7 +210,8 @@ public class ImageLoader implements Runnable {
             }
         }
 
-        if (imageCache.containsKeyInMemory(imageUrl)) {
+				//MJM APPO disable cache since it has bugs
+        if (imageCache.containsKeyInMemory(imageUrl) && false) {
             // do not go through message passing, handle directly instead
             handler.handleImageLoaded(imageCache.getBitmap(imageUrl), null);
         } else {
@@ -246,7 +247,8 @@ public class ImageLoader implements Runnable {
 
         if (bitmap == null) {
             bitmap = downloadImage();
-        }
+        } else {
+				}
 
         // TODO: gracefully handle this case.
         notifyImageLoaded(imageUrl, bitmap);
@@ -265,7 +267,7 @@ public class ImageLoader implements Runnable {
                 if (imageData != null) {
                     imageCache.put(imageUrl, imageData);
                 } else {
-                    break;
+ 									break;
                 }
 
                 return BitmapFactory.decodeByteArray(imageData, 0, imageData.length);

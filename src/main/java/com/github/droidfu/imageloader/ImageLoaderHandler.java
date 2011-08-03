@@ -23,6 +23,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.ImageView;
 
+
 public class ImageLoaderHandler extends Handler {
 
     private ImageView imageView;
